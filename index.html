@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Music Player</title>
+		<link rel="stylesheet" type="text/css" href="style.css">
+
+		<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+
+		<script src="https://kit.fontawesome.com/cbd8629d2f.js" crossorigin="anonymous"></script>
+	</head>
+	<body>
+		<div class="container">
+			
+			<div class="content">
+
+				<nav>
+					<div class="circle">
+						<i class="fa-solid fa-arrow-left"></i>					
+					</div>
+					<div class="circle">
+						<i class="fa-solid fa-bars"></i>
+					</div>
+				</nav>
+
+				<div class="info">
+					<img
+						src="https://neurosciencenews.com/files/2023/10/music-emotion-neuroscience.jpg"
+						class="img"
+					/><br/>
+					<h3>Music Title for Test</h3>
+					<small>Music Albarm</small>
+				</div>
+
+				<div class="play">
+					<audio id="song">
+						<source src="sample.mp3" type="audio/mpeg">
+					</audio>
+					<input type="range" value="0" id="progress">
+				</div>
+
+				<div class="action">
+					
+					<div class="indexBtn">
+						<i class="fa-solid fa-backward"></i>
+					</div>
+
+					<div class="playBtn" onclick="play()">
+						<i class="fa-solid fa-play" id="playBtn"></i>
+					</div>
+
+					<div class="indexBtn">
+						<i class="fa-solid fa-forward"></i>
+					</div>
+
+				</div>
+				
+			</div>
+
+		</div>
+
+		<script type="text/javascript">
+			
+			let progress = document.getElementById('progress')
+			let song = document.getElementById('song')
+			let playBtn = document.getElementById('playBtn')
+
+			song.onloadedmetadata = function() {
+				progress.max = song.duration
+				progress.value = song.currentTime
+			}
+
+			function play() {
+				if(playBtn.classList.contains('fa-pause')){
+					song.pause();
+					playBtn.classList.remove('fa-pause')
+					playBtn.classList.add('fa-play')
+				}
+				else {
+					song.play();
+
+					playBtn.classList.add('fa-pause')
+					playBtn.classList.remove('fa-play')
+				}
+			}
+
+			if(song.play()){
+				setInterval(() => {
+					progress.value = song.currentTime
+				},500)
+			}
+
+			progress.onchange = function () {
+				song.currentTime = progress.value
+
+				song.play()
+
+				playBtn.classList.add('fa-pause')
+				playBtn.classList.remove('fa-play')
+			}
+
+		</script>
+
+	</body>
+</html>
